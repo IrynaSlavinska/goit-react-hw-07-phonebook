@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import Notiflix from 'notiflix';
 
 import { getContacts } from '../../redux/selectors';
-import { addContactAction } from '../../redux/contactsSlice';
+import { addContactPostAction } from '../../redux/contactsSlice';
 
 import { Form, Label, Input, AddContactBtn } from './ContactForm.styled';
 
@@ -17,15 +17,15 @@ const ContactForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const isExist = contacts.some(contact => contact.name === name);
 
+    const isExist = contacts.some(contact => contact.name === name);
     if (isExist) {
       return Notiflix.Notify.warning('Contact is already in your phonebook', {
         timeout: 3000,
       });
     }
 
-    dispatch(addContactAction({ name, number, id: nanoid() }));
+    dispatch(addContactPostAction({ name, number }));
 
     setName('');
     setNumber('');

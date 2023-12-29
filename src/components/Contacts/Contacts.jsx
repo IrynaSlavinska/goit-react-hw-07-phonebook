@@ -1,6 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts, getFilterValue } from '../../redux/selectors';
-import { deleteContactAction } from '../../redux/contactsSlice';
+import {
+  getAllContactsAction,
+  delContactDeleteAction,
+} from '../../redux/contactsSlice';
+import { getError, getIsLoading } from '../../redux/selectors';
+
 import {
   List,
   Item,
@@ -10,13 +15,19 @@ import {
   DeleteContactBtn,
 } from './Contacts.styled';
 import { MdDelete } from 'react-icons/md';
+import { useEffect } from 'react';
 
 const Contacts = () => {
   const filter = useSelector(getFilterValue);
   const contacts = useSelector(getContacts);
+  // const isLoading = useSelector(getIsLoading);
+  // const error = useSelector(getError);
 
   const dispatch = useDispatch();
-  const deleteContact = delId => dispatch(deleteContactAction(delId));
+
+  useEffect(() => {
+    dispatch(getAllContactsAction());
+  }, [dispatch]);
 
   const getFilteredContacts = () => {
     if (filter.filter === '') return;
@@ -39,7 +50,12 @@ const Contacts = () => {
             <Name>{name}</Name>
             <Number>{number}</Number>
           </Container>
-          <DeleteContactBtn type="button" onClick={() => deleteContact(id)}>
+          <DeleteContactBtn
+            type="button"
+            onClick={() => {
+              delContactDeleteAction();
+            }}
+          >
             <MdDelete />
           </DeleteContactBtn>
         </Item>
