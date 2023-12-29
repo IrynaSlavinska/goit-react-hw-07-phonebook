@@ -1,14 +1,13 @@
 import { useState } from 'react';
-// import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import Notiflix from 'notiflix';
 
 import { getContacts } from '../../redux/selectors';
-import { addContactPostAction } from '../../redux/contactsSlice';
+import { addContactAction } from '../../redux/contactsOperations';
 
 import { Form, Label, Input, AddContactBtn } from './ContactForm.styled';
 
-const ContactForm = () => {
+const ContactForm = ({ submit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -20,29 +19,25 @@ const ContactForm = () => {
 
     const isExist = contacts.some(contact => contact.name === name);
     if (isExist) {
-      return Notiflix.Notify.warning('Contact is already in your phonebook', {
-        timeout: 3000,
-      });
+      return Notiflix.Notify.warning(`${name} is already in your phonebook`);
     }
 
-    dispatch(addContactPostAction({ name, number }));
+    dispatch(addContactAction({ name, number }));
 
     setName('');
     setNumber('');
   };
 
   const handleChange = e => {
-    const { name, value } = e.currentTarget;
+    const { name, value } = e.target;
 
     switch (name) {
       case 'name':
         setName(value);
         break;
-
       case 'number':
         setNumber(value);
         break;
-
       default:
         break;
     }

@@ -2,8 +2,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getContacts, getFilterValue } from '../../redux/selectors';
 import {
   getAllContactsAction,
-  delContactDeleteAction,
-} from '../../redux/contactsSlice';
+  deleteContactAction,
+} from '../../redux/contactsOperations';
 import { getError, getIsLoading } from '../../redux/selectors';
 
 import {
@@ -15,13 +15,14 @@ import {
   DeleteContactBtn,
 } from './Contacts.styled';
 import { MdDelete } from 'react-icons/md';
+import { RiContactsFill } from 'react-icons/ri';
 import { useEffect } from 'react';
 
 const Contacts = () => {
-  const filter = useSelector(getFilterValue);
   const contacts = useSelector(getContacts);
-  // const isLoading = useSelector(getIsLoading);
-  // const error = useSelector(getError);
+  const filter = useSelector(getFilterValue);
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
 
   const dispatch = useDispatch();
 
@@ -44,8 +45,10 @@ const Contacts = () => {
 
   return (
     <List>
+      {isLoading && !error && <p>Loading...</p>}
       {visibleContacts.map(({ id, name, number }) => (
         <Item key={id}>
+          <RiContactsFill />
           <Container>
             <Name>{name}</Name>
             <Number>{number}</Number>
@@ -53,7 +56,7 @@ const Contacts = () => {
           <DeleteContactBtn
             type="button"
             onClick={() => {
-              delContactDeleteAction();
+              dispatch(deleteContactAction(id));
             }}
           >
             <MdDelete />

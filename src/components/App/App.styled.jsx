@@ -9,6 +9,14 @@ export const Container = styled.div`
   gap: 100px;
 `;
 
+export const PartContainerForm = styled.div`
+  width: 500px;
+  padding: 32px;
+  border-radius: 10px;
+  background-color: #ffffc5;
+  box-shadow: 0 5px 15px #3b4b2f;
+`;
+
 export const PartContainer = styled.div`
   width: 500px;
   padding: 32px;

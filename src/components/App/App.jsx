@@ -1,15 +1,20 @@
 import ContactForm from '../ContactForm/ContactForm';
 import Contacts from '../Contacts/Contacts';
 import Filter from '../Filter/Filter';
-import { Container, PartContainer, Title } from './App.styled';
+import {
+  Container,
+  PartContainerForm,
+  PartContainer,
+  Title,
+} from './App.styled';
 
 export const App = () => {
   return (
     <Container>
-      <PartContainer>
+      <PartContainerForm>
         <Title>Phonebook</Title>
         <ContactForm />
-      </PartContainer>
+      </PartContainerForm>
 
       <PartContainer>
         <Title>Contacts</Title>
