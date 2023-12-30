@@ -15,7 +15,7 @@ import {
   DeleteContactBtn,
 } from './Contacts.styled';
 import { MdDelete } from 'react-icons/md';
-import { RiContactsFill } from 'react-icons/ri';
+// import { RiContactsFill } from 'react-icons/ri';
 import { useEffect } from 'react';
 
 const Contacts = () => {
@@ -44,26 +44,30 @@ const Contacts = () => {
   const visibleContacts = getFilteredContacts();
 
   return (
-    <List>
-      {isLoading && !error && <p>Loading...</p>}
-      {visibleContacts.map(({ id, name, number }) => (
-        <Item key={id}>
-          <RiContactsFill />
-          <Container>
-            <Name>{name}</Name>
-            <Number>{number}</Number>
-          </Container>
-          <DeleteContactBtn
-            type="button"
-            onClick={() => {
-              dispatch(deleteContactAction(id));
-            }}
-          >
-            <MdDelete />
-          </DeleteContactBtn>
-        </Item>
-      ))}
-    </List>
+    <>
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Something went wrong!. Try again later</p>}
+      <List>
+        {visibleContacts.map(({ id, name, number, avatar }) => (
+          <Item key={id}>
+            {/* <RiContactsFill /> */}
+            <img src={avatar} alt="avatar" width="52" />
+            <Container>
+              <Name>{name}</Name>
+              <Number>{number}</Number>
+            </Container>
+            <DeleteContactBtn
+              type="button"
+              onClick={() => {
+                dispatch(deleteContactAction(id));
+              }}
+            >
+              <MdDelete />
+            </DeleteContactBtn>
+          </Item>
+        ))}
+      </List>
+    </>
   );
 };
 
